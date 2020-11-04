@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChiruboManager : MonoBehaviour
 {
     Rigidbody2D rb;
+    float speed = 0.02f;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,7 @@ public class ChiruboManager : MonoBehaviour
     void Update()
     {
         //前進させる
-        transform.position += new Vector3(0.01f, 0, 0);
+        transform.position += new Vector3(speed, 0, 0);
 
         //タップしたときの記述
         if (Input.GetMouseButton(0))
