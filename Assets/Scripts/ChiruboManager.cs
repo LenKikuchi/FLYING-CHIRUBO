@@ -18,6 +18,8 @@ public class ChiruboManager : MonoBehaviour
     //BGMマネージャーを取得する変数
     public GameObject BgmManager;
 
+    public Collision2D collision;
+
     //スコア
     int score;
 
@@ -58,7 +60,7 @@ public class ChiruboManager : MonoBehaviour
         }
     }
 
-    // ぶつかった時の処理
+    // 画面外に出た時の処理
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //効果音を出す
@@ -69,6 +71,12 @@ public class ChiruboManager : MonoBehaviour
 
         //ゲームオーバーキャンバスを出す
         GameOver.SetActive(true);
+
+        //ちるぼうを停止
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+
+        //前進を停止
+        speed = 0f;
     }
 
     //すれ違った時の処理
@@ -103,6 +111,12 @@ public class ChiruboManager : MonoBehaviour
 
             //ゲームオーバーキャンバスを表示
             GameOver.SetActive(true);
+
+            //ちるぼうを停止
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+
+            //前進を停止
+            speed = 0f;
         }
     }
 
@@ -114,6 +128,12 @@ public class ChiruboManager : MonoBehaviour
         //スコアを表示
         ScoreText.GetComponent<Text>().text = "SCORE:" + score.ToString();
 
+    }
+
+    //スコアをリセットする関数
+    void ReserScore()
+    {
+        ScoreText.GetComponent<Text>().text = "SCORE:0";
     }
 
     // リトライボタンを押したときにゲームをリスタートさせる

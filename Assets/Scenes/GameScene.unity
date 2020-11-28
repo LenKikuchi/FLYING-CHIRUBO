@@ -1336,8 +1336,8 @@ MonoBehaviour:
   GameOver: {fileID: 752443352}
   ScoreText: {fileID: 1902336327}
   BgmManager: {fileID: 1245364723}
-  item: {fileID: 8300000, guid: ccdfb304e7ccc43f5a55903821477bb1, type: 3}
-  GameOverSounds: {fileID: 8300000, guid: 458a726eaa4b842aea2e5069ef9eefad, type: 3}
+  item: {fileID: 8300000, guid: 59db49f168e1a491d8c570cdbb4474b5, type: 3}
+  GameOverSounds: {fileID: 8300000, guid: 7bc90f3d4c9e045f98aa9bac32d09c2f, type: 3}
 --- !u!82 &1574931889
 AudioSource:
   m_ObjectHideFlags: 0
