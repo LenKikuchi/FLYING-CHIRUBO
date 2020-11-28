@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ChiruboManager : MonoBehaviour
 {
@@ -11,10 +12,36 @@ public class ChiruboManager : MonoBehaviour
     //ゲームオーバーキャンバスを格納する変数
     public GameObject GameOver;
 
+    //スコアオブジェクトを格納する変数
+    public GameObject ScoreText;
+
+    //BGMマネージャーを取得する変数
+    public GameObject BgmManager;
+
+    //スコア
+    int score;
+
+    //クリアになるアイテム数
+    int ClearNumber = 10;
+
+    //効果音
+    public AudioClip item;
+    public AudioClip GameOverSounds;
+
+    //オーディオソースを格納する変数
+    AudioSource audioSource;
+
+    //BGMのオーディオソースを格納する変数
+    AudioSource BgmSource;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        audioSource = GetComponent<AudioSource>();
+
+        BgmSource = BgmManager.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,10 +59,61 @@ public class ChiruboManager : MonoBehaviour
     }
 
     // ぶつかった時の処理
-    private void OnColliseionExit2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        //効果音を出す
+        audioSource.PlayOneShot(GameOverSounds);
+
+        //Bgmを止める
+        BgmSource.Stop();
+
         //ゲームオーバーキャンバスを出す
-        
+        GameOver.SetActive(true);
+    }
+
+    //すれ違った時の処理
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //桜とすれ違った時
+        if (collision.gameObject.tag == "sakura")
+        {
+            //効果音を出す
+            audioSource.PlayOneShot(item);
+
+            //桜を消す
+            Destroy(collision.gameObject);
+
+            //スコアを加算
+            GetScore();
+
+            if(score == ClearNumber)
+            {
+                SceneManager.LoadScene("ClearScene");
+            }
+        }
+
+        //雷とすれ違った時
+        if (collision.gameObject.tag == "kaminari")
+        {
+            //効果音を出す
+            audioSource.PlayOneShot(GameOverSounds);
+
+            //BGMを止める
+            BgmSource.Stop();
+
+            //ゲームオーバーキャンバスを表示
+            GameOver.SetActive(true);
+        }
+    }
+
+    //スコアを加算する関数
+    void GetScore()
+    {
+        score++;
+
+        //スコアを表示
+        ScoreText.GetComponent<Text>().text = "SCORE:" + score.ToString();
+
     }
 
     // リトライボタンを押したときにゲームをリスタートさせる
