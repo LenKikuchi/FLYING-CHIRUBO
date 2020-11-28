@@ -42,7 +42,7 @@ public class GenerateManager : MonoBehaviour
         float probability = Random.Range(1.0f, 100.0f);
 
         //一定の確率で雷を生成
-        if(probability <= 40)
+        if(probability <= 30)
         {
             //雷を作成する
             Instantiate(KaminariPrefab, generatePos, Quaternion.identity);
